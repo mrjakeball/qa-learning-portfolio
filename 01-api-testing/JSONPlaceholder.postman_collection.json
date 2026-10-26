@@ -1,0 +1,75 @@
+{
+  "info": {
+    "_postman_id": "57848840-12ca-4b33-b6c9-ea4b88d226d0",
+    "name": "JSONPlaceholder API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59202146",
+    "_collection_link": "https://go.postman.co/collection/59202146-57848840-12ca-4b33-b6c9-ea4b88d226d0?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET - User not found (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\npm.test(\"Несуществующий пользователь возвращает 404\", function () {\n    pm.response.to.have.status(404);\n});\n\npm.test(\"Ответ содержит пустой JSON-объект\", function () {\n    const body = pm.response.json();\n    pm.expect(body).to.deep.equal({});\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/99999",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users",
+            "99999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET - Existing user (200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\npm.test(\"Пользователь найден\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"ID пользователя равен 1\", function () {\n    const user = pm.response.json();\n    pm.expect(user.id).to.equal(1);\n});\n\npm.test(\"Name пользователя равен Leanne Graham\", function () {\n    const user = pm.response.json();\n    pm.expect(user.name).to.equal(\"Leanne Graham\");\n});\n\npm.test(\"e-mail пользователя не пустая строка\", function () {\n    const user = pm.response.json();\n    pm.expect(typeof user.email).to.equal(\"string\");\n    pm.expect(user.email.trim()).to.not.equal(\"\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/1",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
