@@ -70,6 +70,46 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "POST - Create post (201)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Проверка статуса\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Проверка ID\", function () {\n    const post = pm.response.json();\n    pm.expect(post.id).to.equal(101);\n});\n\npm.test(\"Заголовок ответа совпадает с запросом\", function () {\n    const request = JSON.parse(pm.request.body.raw);\n    const response = pm.response.json();\n\n    pm.expect(response.title).to.equal(request.title);\n});\n\npm.test(\"Тело ответа совпадает с запросом\", function () {\n    const request = JSON.parse(pm.request.body.raw);\n    const response = pm.response.json();\n\n    pm.expect(response.body).to.equal(request.body);\n});\n\npm.test(\"ID пользователя совпадает с запросом\", function () {\n    const request = JSON.parse(pm.request.body.raw);\n    const response = pm.response.json();\n\n    pm.expect(response.userId).to.equal(request.userId);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\n{\n  \"title\": \"Проверка нового заголовка\",\n  \"body\": \"Проверяем создание записи через Postman\",\n  \"userId\": 1\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
